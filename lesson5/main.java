@@ -72,7 +72,7 @@ public class main {
             int x = number / 10;
             int y = number % 10;
 
-            if (x-1 >= 0)
+            if (x-1 >= 0 & ex == 0)
                 if (m[x-1][y] == -3)
                 {
                     ex = (x-1)*10+y;
@@ -84,7 +84,7 @@ public class main {
                     m[x-1][y] = m[x][y]+1;
                     myPriorityQueue.add((x-1)*10+y);
                 }
-            if (y+1 <= colums)
+            if (y+1 <= colums & ex == 0)
                 if (m[x][y+1] == -3)
                 {
                     ex = x*10+(y+1);
@@ -96,7 +96,7 @@ public class main {
                     m[x][y+1] = m[x][y]+1;
                     myPriorityQueue.add(x*10+(y+1));
                 }
-            if (x+1 <= rows)
+            if (x+1 <= rows & ex == 0)
                 if (m[x+1][y] == -3)
                 {
                     ex = (x+1)*10+y;
@@ -108,7 +108,7 @@ public class main {
                     m[x+1][y] = m[x][y]+1;
                     myPriorityQueue.add((x+1)*10+y);
                 }
-            if (y-1 >= 0)
+            if (y-1 >= 0 & ex == 0)
                 if (m[x][y-1] == -3)
                 {
                     ex = x*10+(y-1);
@@ -130,29 +130,52 @@ public class main {
         int colums = m[0].length;
         int step = max;
 
-        for (int i = 1; i < max; i++) {
-            int x = ex / 10;
-            int y = ex % 10;
+        int x = 0;
+        int y = 0;
+        int r = 0;
 
-            if (x-1 >= 0 & m[x-1][y] == step)
+        for (int i = 1; i < max; i++) {
+            x = 0;
+            y = 0;
+            r = 0;
+            if (ex >= 10)
+            {
+                x = ex / 10;
+                y = ex % 10;
+            }
+            else
+            {
+                x = 0;
+                y = ex;
+            }
+
+            if (x-1 >= 0 & r==0)
+                if (m[x-1][y] == step)
                 {
                     m[x-1][y] = -4;
                     ex = (x-1)*10+y;
+                    r = 1;
                 }
-            else if (y+1 <= colums & m[x][y+1] == step)
+            if (y+1 <= colums & r==0)
+                if (m[x][y+1] == step)
                 {
                     m[x][y+1] = -4;
                     ex = x*10+(y+1);
+                    r = 1;
                 }
-            else if (x+1 <= rows & m[x+1][y] == step)
+            if (x+1 <= rows & r==0)
+                if (m[x+1][y] == step)
                 {
                     m[x+1][y] = -4;
                     ex = (x+1)*10+y;
+                    r = 1;
                 }
-            else if (y-1 >= 0 & m[x][y-1] == step)
+            if (y-1 >= 0 & r==0 )
+                if ( m[x][y-1] == step)
                 {
                     m[x][y-1] = -4;
                     ex = x*10+(y-1);
+                    r = 1;
                 }
 
             step = step-1;
